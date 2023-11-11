@@ -48,16 +48,18 @@ function Login() {
               radius="xl"
               label="Contraseña"
               withAsterisk
-              placeholder="Input placeholder"
+              placeholder="Contraseña"
             />
             <Space h="25px" />
             <Checkbox
               mt="md"
-              label="I agree to sell my privacy"
+              label="Acepto terminos y condiciones"
               {...form.getInputProps('termsOfService', { type: 'checkbox' })}
             />
             <Group justify="flex-end" mt="md">
-              <Button type="submit">Siguiente</Button>
+              <Button type="submit" onClick={() => navigate('/')}>
+                Siguiente
+              </Button>
             </Group>
           </form>
         </Box>
