@@ -21,15 +21,24 @@ function Register() {
   const [sellerOpened, sellerCloseOpened] = useState(false);
 
   const form = useForm({
+    /*
     initialValues: {
       email: '',
+      name: '',
+      secondName: '',
+      password: '',
       termsOfService: false,
     },
 
     validate: {
       email: value => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
+    */
   });
+
+  const handleSubmit = values => {
+    console.log('values:', values);
+  };
 
   return (
     <Flex justify="center" align="center" direction="column" h="100vh">
@@ -40,8 +49,19 @@ function Register() {
         centered
       >
         <Box maw={340} mx="auto">
-          <form onSubmit={form.onSubmit(values => console.log(values))}>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const values = {};
+              formData.forEach((value, key) => {
+                values[key] = value;
+              });
+              handleSubmit(values);
+            }}
+          >
             <TextInput
+              name="email"
               size="md"
               radius="xl"
               withAsterisk
@@ -51,27 +71,33 @@ function Register() {
             />
             <Space h="15px" />
             <TextInput
+              name="name"
               size="md"
               radius="xl"
               withAsterisk
               label="Nombre"
               placeholder="Nombre"
+              {...form.getInputProps('name')}
             />
             <Space h="15px" />
             <TextInput
+              name="secondName"
               size="md"
               radius="xl"
               withAsterisk
               label="Apellido"
               placeholder="Apellido"
+              {...form.getInputProps('secondName')}
             />
             <Space h="15px" />
             <PasswordInput
+              name="password"
               size="md"
               radius="xl"
               label="Contraseña"
               withAsterisk
               placeholder="Contraseña"
+              {...form.getInputProps('password')}
             />
             <Space h="15px" />
             <PasswordInput
@@ -83,6 +109,7 @@ function Register() {
             />
             <Space h="15px" />
             <Checkbox
+              name="checkbox"
               mt="md"
               label="Acepto terminos y condiciones"
               {...form.getInputProps('termsOfService', { type: 'checkbox' })}
@@ -102,7 +129,17 @@ function Register() {
         centered
       >
         <Box maw={340} mx="auto">
-          <form onSubmit={form.onSubmit(values => console.log(values))}>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const values = {};
+              formData.forEach((value, key) => {
+                values[key] = value;
+              });
+              handleSubmit(values);
+            }}
+          >
             <TextInput
               size="md"
               radius="xl"
@@ -112,6 +149,7 @@ function Register() {
             />
             <Space h="15px" />
             <TextInput
+              name="email"
               size="md"
               radius="xl"
               withAsterisk
@@ -145,6 +183,7 @@ function Register() {
             />
             <Space h="15px" />
             <Checkbox
+              name="checkbox"
               mt="md"
               label="Acepto terminos y condiciones"
               {...form.getInputProps('termsOfService', { type: 'checkbox' })}

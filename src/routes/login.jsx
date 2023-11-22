@@ -1,17 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import {
-  Flex,
-  Card,
-  Button,
-  Space,
-  Modal,
-  TextInput,
-  Checkbox,
-  Group,
-  Box,
-  PasswordInput,
-} from '@mantine/core';
+import { Flex, Card, Button, Space, Modal, TextInput, Checkbox, Group,Box, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 
