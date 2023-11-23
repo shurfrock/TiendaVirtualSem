@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Card, Avatar, Tabs, Table, Space, Burger, Button, Input, Modal } from '@mantine/core';
+import { Flex, Card, Avatar, Tabs, Table, Space, Burger, Button, Input, Modal, Title, PasswordInput, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,11 +11,14 @@ function StoreHome() {
         { image: 'Imagen',
         cost: 'Costo', 
         action: (
-            <> 
-                <Button variant="filled" color="lime" radius="xl">Agregar</Button>
+            <Flex 
+                    justify="space-between"
+                    align="center"
+            >
+                <Button variant="filled" color="lime" radius="xl">Agregar Producto</Button>
                 <Button variant="filled" radius="xl">Editar</Button>
                 <Button variant="filled" radius="xl" color="red">Eliminar</Button>
-            </>
+            </Flex>         
         ), 
         category: 'Categoria', 
         name: 'Nombre' },
@@ -35,7 +38,17 @@ function StoreHome() {
         
         <Flex justify="center" align="center" direction="column" h="100vh">
             <Modal opened={opened} onClose={close} title="Ayuda...">
-                <Button variant="filled" radius="xl" color="red" onClick={() => navigate('/login')}>Salir</Button>
+                <Space h="25px" />
+                <Text size="lg">¿Estas seguro que deseas Salir de la pagina?</Text>
+                <Space h="25px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="red" onClick={() => navigate('/login')}>Salir</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={close}>Cancelar</Button>
+                </Flex>
+                <Space h="25px" />
             </Modal>
             <Card
                 shadow="sm"
@@ -46,14 +59,11 @@ function StoreHome() {
                 withBorder
             >
                 <Flex 
-                    mih={50}
-                    gap={1200}
-                    justify="center"
+                    justify="space-between"
                     align="center"
-                    direction="row"
-                    wrap="wrap"
                 >
                     <Avatar src={null} alt="no image here" />
+                    <Title order={1}>Home Tienda</Title>
                     <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" />
                 </Flex>
                 <Space h="25px" />
@@ -68,14 +78,14 @@ function StoreHome() {
                     </Tabs.List>
                     <Tabs.Panel value="products">
                         <Space h="25px" />
-                        Products 
-                        <Button variant="filled" color="lime" radius="xl">Agregar Producto</Button>
-                        <Table verticalSpacing="lg">
+                        <Button variant="filled" color="lime" radius="xl">Crear Producto</Button>
+                        <Space h="25px" />
+                        <Table verticalSpacing="lg" horizontalSpacing="md" highlightOnHover>
                                 <Table.Tr>
-                                    <Table.Th>Imagen</Table.Th>
-                                    <Table.Th>Nombre Producto</Table.Th>
-                                    <Table.Th>Costo</Table.Th>
-                                    <Table.Th>Categoria</Table.Th>
+                                    <Table.Th width="300px">Imagen</Table.Th>
+                                    <Table.Th width="250px">Nombre Producto</Table.Th>
+                                    <Table.Th width="150px">Costo</Table.Th>
+                                    <Table.Th width="150px">Categoria</Table.Th>
                                     <Table.Th>Acciones</Table.Th>
                                 </Table.Tr>
                             <Table.Tbody>{rowsProducts}</Table.Tbody>
@@ -83,21 +93,29 @@ function StoreHome() {
                     </Tabs.Panel>
 
                     <Tabs.Panel value="store">
-                        <Space h="25px" />
-                        Store configuration  
+                        <Space h="25px" /> 
                         <Button variant="filled" radius="xl">Editar</Button>
-                        <Input.Wrapper label="Tienda">
-                            <Input placeholder="Nombre Tienda"/>
-                        </Input.Wrapper>
-                        <Input.Wrapper label="Correo">
-                            <Input placeholder="Correo"/>
-                        </Input.Wrapper>
-                        <Input.Wrapper label="Dueño">
-                            <Input placeholder="Dueño"/>
-                        </Input.Wrapper>
-                        <Input.Wrapper label="Contraseña">
-                            <Input placeholder="Contraseña" />
-                        </Input.Wrapper>
+                        <Space h="25px" /> 
+                        <Flex justify="center" align="center" direction="column" gap="35px">
+                            <Input.Wrapper label="Tienda">
+                                <Input placeholder="Nombre Tienda" style={{ width: '550px' }}/>
+                            </Input.Wrapper>
+ 
+                            <Input.Wrapper label="Correo">
+                                <Input placeholder="Correo" style={{ width: '550px' }}/>
+                            </Input.Wrapper>
+
+                            <Input.Wrapper label="Dueño">
+                                <Input placeholder="Dueño" style={{ width: '550px' }}/>
+                            </Input.Wrapper>
+
+                            <PasswordInput
+                                radius="xs"
+                                label="Contraseña"
+                                placeholder="Contraseña"
+                                style={{ width: '550px' }}
+                            />
+                        </Flex>
                     </Tabs.Panel>
                 </Tabs>
             </Card>

@@ -46,7 +46,7 @@ function Login() {
               {...form.getInputProps('termsOfService', { type: 'checkbox' })}
             />
             <Group justify="flex-end" mt="md">
-              <Button type="submit" onClick={() => navigate('/')}>
+              <Button type="submit">
                 Siguiente
               </Button>
             </Group>

@@ -1,19 +1,24 @@
 import React from 'react';
-import { Flex, Card, Avatar, Tabs, Table, Space, Burger, Button, Modal } from '@mantine/core';
+import { Flex, Card, Avatar, Tabs, Table, Space, Burger, Button, Modal, Title, Text, PasswordInput, Input } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 
 function ClientHome() {
     const [opened, { toggle, close }] = useDisclosure(false);
+    const [openedA, { toggle: toggleA, close: closeA }] = useDisclosure(false);
+
     const navigate = useNavigate();
     const elementsProducts = [
         { image: 'Imagen',
         cost: 'Costo', 
         action: (
-            <> 
+            <Flex 
+                justify="space-between"
+                align="center"
+            > 
                 <Button variant="filled" color="lime" radius="xl">Agregar</Button>
                 <Button variant="filled" radius="xl">Ver...</Button>
-            </>
+            </Flex>
         ), 
         category: 'Categoria', 
         name: 'Nombre' },
@@ -31,10 +36,13 @@ function ClientHome() {
         { image: 'Imagen',
         cost: 'Costo', 
         action: (
-            <> 
+            <Flex 
+                justify="space-between"
+                align="center"
+            >
                 <Button variant="filled" color="lime" radius="xl">Agregar</Button>
                 <Button variant="filled" color="red" radius="xl">Eliminar</Button>
-            </>
+            </Flex>
         ), 
         category: 'Categoria', 
         name: 'Nombre',
@@ -75,9 +83,50 @@ function ClientHome() {
     ));
 
     return (
+        
         <Flex justify="center" align="center" direction="column" h="100vh" >
             <Modal opened={opened} onClose={close} title="Ayuda...">
-                <Button variant="filled" radius="xl" color="red" onClick={() => navigate('/login')}>Salir</Button>
+                <Space h="25px" />
+                <Text size="lg">¿Estas seguro que deseas Salir de la pagina?</Text>
+                <Space h="25px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="red" onClick={() => navigate('/login')}>Salir</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={close}>Cancelar</Button>
+                </Flex>
+            </Modal>
+            <Modal opened={openedA} onClose={closeA} title="Perfil de Ususario">
+                <Space h="10px" />
+                <Flex justify="center" align="center" direction="column" gap="15px">
+                    <Input.Wrapper label="Nombre">
+                        <Input placeholder="Nombre " style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Apellido">
+                        <Input placeholder="Apellido" style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Correo">
+                        <Input placeholder="Correo" style={{ width: '350px' }}/>
+                    </Input.Wrapper>                       
+
+                    <PasswordInput
+                        radius="xs"
+                        label="Contraseña"
+                        placeholder="Contraseña"
+                        style={{ width: '350px' }}
+                    />
+                </Flex>
+                <Space h="35px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="blue">Editar</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeA}>Cancelar</Button>
+                </Flex>
             </Modal>
             <Card
                 shadow="sm"
@@ -88,14 +137,11 @@ function ClientHome() {
                 withBorder
             >
                 <Flex 
-                    mih={50}
-                    gap={1200}
-                    justify="center"
+                    justify="space-between"
                     align="center"
-                    direction="row"
-                    wrap="wrap"
                 >
-                    <Avatar src={null} alt="no image here" />
+                    <Avatar opened={openedA} onClick={toggleA} variant="filled" radius="xl" color="yellow" src=""/>
+                    <Title order={1}>Home Cliente</Title>
                     <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" />
                 </Flex>
                 <Space h="25px" />
@@ -114,13 +160,13 @@ function ClientHome() {
 
                     <Tabs.Panel value="products">
                         <Space h="25px" />
-                        Products content
-                        <Table horizontalSpacing="sm" verticalSpacing="lg">
+                        Productos de las Tiendas.
+                        <Table verticalSpacing="lg" horizontalSpacing="md" highlightOnHover>
                                 <Table.Tr>
-                                    <Table.Th>Imagen</Table.Th>
-                                    <Table.Th>Nombre Producto</Table.Th>
-                                    <Table.Th>Costo</Table.Th>
-                                    <Table.Th>Categoria</Table.Th>
+                                    <Table.Th width="300px">Imagen</Table.Th>
+                                    <Table.Th width="250px">Nombre Producto</Table.Th>
+                                    <Table.Th width="200px">Costo</Table.Th>
+                                    <Table.Th width="250px">Categoria</Table.Th>
                                     <Table.Th>Acciones</Table.Th>
                                 </Table.Tr>
                             <Table.Tbody>{rowsProducts}</Table.Tbody>
@@ -129,8 +175,8 @@ function ClientHome() {
 
                     <Tabs.Panel value="store">
                         <Space h="25px" />
-                        Store tab content
-                        <Table horizontalSpacing="sm" verticalSpacing="lg">
+                        Tiendas
+                        <Table verticalSpacing="lg" horizontalSpacing="md" highlightOnHover>
                                 <Table.Tr>
                                     <Table.Th>Imagen</Table.Th>
                                     <Table.Th>Tienda</Table.Th>
@@ -144,14 +190,14 @@ function ClientHome() {
 
                     <Tabs.Panel value="car">
                         <Space h="25px" />
-                        Car tab content
-                        <Table horizontalSpacing="sm" verticalSpacing="lg">
+                        Carito de Compras
+                        <Table verticalSpacing="lg" horizontalSpacing="md" highlightOnHover>
                                 <Table.Tr>
-                                    <Table.Th>Imagen</Table.Th>
-                                    <Table.Th>Nombre Producto</Table.Th>
-                                    <Table.Th>Costo</Table.Th>
-                                    <Table.Th>Categoria</Table.Th>
-                                    <Table.Th>Cantidad</Table.Th>
+                                    <Table.Th width="300px">Imagen</Table.Th>
+                                    <Table.Th width="300px">Nombre Producto</Table.Th>
+                                    <Table.Th width="200px">Costo</Table.Th>
+                                    <Table.Th width="150px">Categoria</Table.Th>
+                                    <Table.Th width="100px">Cantidad</Table.Th>
                                     <Table.Th>Acciones</Table.Th>
                                 </Table.Tr>
                             <Table.Tbody>{rowsCar}</Table.Tbody>
