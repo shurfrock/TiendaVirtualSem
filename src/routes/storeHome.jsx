@@ -5,6 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 function StoreHome() {
     const [opened, { toggle, close }] = useDisclosure(false);
+    const [openedAdd, { toggle: toggleAdd, close: closeAdd }] = useDisclosure(false);
+    const [openedEdit, { toggle: toggleEdit, close: closeEdit }] = useDisclosure(false);
+    const [openedDelete, { toggle: toggleDelete, close: closeDelete }] = useDisclosure(false);
+    
     const navigate = useNavigate();
 
     const elementsProducts = [
@@ -16,8 +20,8 @@ function StoreHome() {
                     align="center"
             >
                 <Button variant="filled" color="lime" radius="xl">Agregar Producto</Button>
-                <Button variant="filled" radius="xl">Editar</Button>
-                <Button variant="filled" radius="xl" color="red">Eliminar</Button>
+                <Button variant="filled" radius="xl" opened={openedEdit} onClick={toggleEdit}>Editar</Button>
+                <Button variant="filled" radius="xl" color="red" opened={openedDelete} onClick={toggleDelete}>Eliminar</Button>
             </Flex>         
         ), 
         category: 'Categoria', 
@@ -50,6 +54,69 @@ function StoreHome() {
                 </Flex>
                 <Space h="25px" />
             </Modal>
+            <Modal opened={openedDelete} onClose={closeDelete} title="Ayuda...">
+                <Space h="25px" />
+                <Text size="lg">¿Se eliminara el Producto?</Text>
+                <Space h="25px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="red" >Eliminar</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeDelete}>Cancelar</Button>
+                </Flex>
+                <Space h="25px" />
+            </Modal>
+            <Modal opened={openedAdd} onClose={closeAdd} title="Agregar Producto">
+                <Space h="10px" />
+                <Flex justify="center" align="center" direction="column" gap="15px">
+                    <Text size="lg">Imagen</Text>
+                    <Input.Wrapper label="Nombre Producto">
+                        <Input placeholder="Nombre Producto" style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Costo">
+                        <Input placeholder="Costo" style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Categoria">
+                        <Input placeholder="Categoria" style={{ width: '350px' }}/>
+                    </Input.Wrapper>                       
+                </Flex>
+                <Space h="35px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="green">Guardar</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeAdd}>Cancelar</Button>
+                </Flex>
+            </Modal>
+            <Modal opened={openedEdit} onClose={closeEdit} title="Editar Producto">
+                <Space h="10px" />
+                <Flex justify="center" align="center" direction="column" gap="15px">
+                    <Text size="lg">Imagen</Text>
+                    <Input.Wrapper label="Nombre Producto">
+                        <Input placeholder="Nombre Producto" style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Costo">
+                        <Input placeholder="Costo" style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Categoria">
+                        <Input placeholder="Categoria" style={{ width: '350px' }}/>
+                    </Input.Wrapper>                       
+                </Flex>
+                <Space h="35px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="blue">Guardar</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeEdit}>Cancelar</Button>
+                </Flex>
+            </Modal>
             <Card
                 shadow="sm"
                 p="lg"
@@ -78,7 +145,7 @@ function StoreHome() {
                     </Tabs.List>
                     <Tabs.Panel value="products">
                         <Space h="25px" />
-                        <Button variant="filled" color="lime" radius="xl">Crear Producto</Button>
+                        <Button opened={openedAdd} onClick={toggleAdd} variant="filled" color="lime" radius="xl" >Crear Producto</Button>
                         <Space h="25px" />
                         <Table verticalSpacing="lg" horizontalSpacing="md" highlightOnHover>
                                 <Table.Tr>

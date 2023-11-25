@@ -1,11 +1,15 @@
 import React from 'react';
-import { Flex, Card, Avatar, Tabs, Table, Space, Burger, Button, Modal, Title, Text, PasswordInput, Input } from '@mantine/core';
+import { Flex, Card, Avatar, Tabs, Table, Space, Burger, Button, Modal, Title, Text, PasswordInput, Input, Image } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 
 function ClientHome() {
     const [opened, { toggle, close }] = useDisclosure(false);
     const [openedA, { toggle: toggleA, close: closeA }] = useDisclosure(false);
+    const [openedProduct, { toggle: toggleProdcut, close: closeProduct }] = useDisclosure(false);
+    const [openedStore, { toggle: toggleStore, close: closeStore }] = useDisclosure(false);
+    const [openedDelete, { toggle: toggleDelete, close: closeDelete }] = useDisclosure(false);
+    const [openedBuy, { toggle: toggleBuy, close: closeBuy }] = useDisclosure(false);
 
     const navigate = useNavigate();
     const elementsProducts = [
@@ -17,7 +21,7 @@ function ClientHome() {
                 align="center"
             > 
                 <Button variant="filled" color="lime" radius="xl">Agregar</Button>
-                <Button variant="filled" radius="xl">Ver...</Button>
+                <Button variant="filled" radius="xl" opened={openedProduct} onClick={toggleProdcut} >Ver...</Button>
             </Flex>
         ), 
         category: 'Categoria', 
@@ -27,7 +31,7 @@ function ClientHome() {
     const elementsStore = [{ 
         image: 'Imagen',
         location: 'Ubicacion', 
-        action:<Button variant="filled" color="lime" radius="xl">Ver productos</Button>,       
+        action:<Button variant="filled" color="lime" radius="xl" opened={openedStore} onClick={toggleStore}>Ver productos</Button>,       
         description: 'Descripcion', 
         name: 'Tienda' 
     },];
@@ -41,7 +45,7 @@ function ClientHome() {
                 align="center"
             >
                 <Button variant="filled" color="lime" radius="xl">Agregar</Button>
-                <Button variant="filled" color="red" radius="xl">Eliminar</Button>
+                <Button variant="filled" color="red" radius="xl" opened={openedDelete} onClick={toggleDelete} >Eliminar</Button>
             </Flex>
         ), 
         category: 'Categoria', 
@@ -97,6 +101,30 @@ function ClientHome() {
                     <Button variant="filled" radius="xl" color="gray" onClick={close}>Cancelar</Button>
                 </Flex>
             </Modal>
+            <Modal opened={openedDelete} onClose={closeDelete} title="Ayuda...">
+                <Space h="25px" />
+                <Text size="lg">¿Estas seguro que deseas Eliminar el producto del carrito?</Text>
+                <Space h="25px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="red">SI</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeDelete}>Cancelar</Button>
+                </Flex>
+            </Modal>
+            <Modal opened={openedBuy} onClose={closeBuy} title="Ayuda...">
+                <Space h="25px" />
+                <Text size="lg">Se comprara los productos del Carrito.</Text>
+                <Space h="25px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="green">Comprar</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeBuy}>Cancelar</Button>
+                </Flex>
+            </Modal>
             <Modal opened={openedA} onClose={closeA} title="Perfil de Ususario">
                 <Space h="10px" />
                 <Flex justify="center" align="center" direction="column" gap="15px">
@@ -128,6 +156,51 @@ function ClientHome() {
                     <Button variant="filled" radius="xl" color="gray" onClick={closeA}>Cancelar</Button>
                 </Flex>
             </Modal>
+            <Modal size={1400} opened={openedStore} onClose={closeStore} title="Productos de Tienda">
+                <Space h="10px" />
+                    <Table verticalSpacing="lg" horizontalSpacing="md" highlightOnHover>
+                            <Table.Tr>
+                                <Table.Th width="300px">Imagen</Table.Th>
+                                <Table.Th width="250px">Nombre Producto</Table.Th>
+                                <Table.Th width="200px">Costo</Table.Th>
+                                <Table.Th width="250px">Categoria</Table.Th>
+                                <Table.Th>Acciones</Table.Th>
+                            </Table.Tr>
+                        <Table.Tbody>{rowsProducts}</Table.Tbody>
+                    </Table>
+                <Space h="35px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeStore}>Cancelar</Button>
+                </Flex>
+            </Modal>
+            <Modal opened={openedProduct} onClose={closeProduct} title="Producto">
+                <Space h="10px" />
+                <Flex justify="center" align="center" direction="column" gap="15px">
+                    <Text size="lg">Imagen</Text>
+                    <Input.Wrapper label="Nombre">
+                        <Input placeholder="Nombre " style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Costo">
+                        <Input placeholder="Costo" style={{ width: '350px' }}/>
+                    </Input.Wrapper>
+
+                    <Input.Wrapper label="Categoria">
+                        <Input placeholder="Categoria" style={{ width: '350px' }}/>
+                    </Input.Wrapper>                       
+                </Flex>
+                <Space h="35px" />
+                <Flex 
+                    align="center"
+                    gap="25px"
+                >
+                    <Button variant="filled" color="lime" radius="xl">Agregar</Button>
+                    <Button variant="filled" radius="xl" color="gray" onClick={closeProduct}>Cancelar</Button>
+                </Flex>
+            </Modal>
             <Card
                 shadow="sm"
                 p="lg"
@@ -152,6 +225,9 @@ function ClientHome() {
                         </Tabs.Tab>
                         <Tabs.Tab value="store" leftSection={null} style={{ fontSize: '20px' }}>
                         Tiendas
+                        </Tabs.Tab>
+                        <Tabs.Tab value="location" leftSection={null} style={{ fontSize: '20px' }}>
+                        Ubicacion
                         </Tabs.Tab>
                         <Tabs.Tab value="car" leftSection={null} style={{ fontSize: '20px' }}>
                         Carrito
@@ -202,7 +278,27 @@ function ClientHome() {
                                 </Table.Tr>
                             <Table.Tbody>{rowsCar}</Table.Tbody>
                         </Table>
-                        <Button variant="filled" color="lime" radius="xl" size="lg">Comprar</Button>
+                        <Space h="35px" />
+                        <Button variant="filled" color="lime" radius="xl" size="lg" opened={openedBuy} onClick={toggleBuy} >Comprar</Button>
+                        <Space h="35px" />
+                    </Tabs.Panel>
+                    <Tabs.Panel value="location">
+                        <Title order={3}>PROXIMAMENTE</Title>
+                        <Flex
+                            mih={50}
+                            gap="md"
+                            justify="center"
+                            align="center"
+                            direction="row"
+                            wrap="wrap"
+                        >
+                            <Image
+                                radius="lg"
+                                h={600}
+                                w="auto"
+                                src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2023/02/google-maps-2961754.jpg?tf=3840x"
+                            />
+                        </Flex>
                     </Tabs.Panel>
                 </Tabs>
             </Card>
